@@ -49,20 +49,20 @@ export default function ImpactSection() {
     {
       title: "Education",
       description: "Providing free coding workshops and mentorship programs to over 1,000 students annually.",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/images/impact-education.jpg",
       color: "from-blue-500 to-cyan-400",
     },
     {
       title: "Innovation",
       description:
         "Developing cutting-edge solutions for real-world problems through hackathons and research projects.",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/images/impact-innovation.jpg",
       color: "from-purple-500 to-pink-400",
     },
     {
       title: "Community",
       description: "Building an inclusive tech ecosystem that supports diversity and collaboration in the industry.",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/images/impact-community.jpg",
       color: "from-amber-500 to-orange-400",
     },
   ]
@@ -158,9 +158,9 @@ export default function ImpactSection() {
           >
             <div className="relative z-10 rounded-xl overflow-hidden shadow-2xl">
               <img
-                src="/placeholder.svg?height=500&width=600"
-                alt="Dablie Tech Club Impact"
-                className="w-full h-auto"
+                src="/images/impact-featured-project.jpg"
+                alt="Dablie Tech Club Impact - Smart City Initiative"
+                className="w-full h-auto object-cover aspect-[4/3]"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">

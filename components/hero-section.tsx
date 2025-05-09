@@ -13,6 +13,14 @@ export default function HeroSection() {
   const { playSound } = useSoundEffects()
   const [currentWord, setCurrentWord] = useState(0)
 
+  const handleExploreClick = () => {
+    const aboutSection = document.getElementById("about-us");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+    playSound("click");
+  };
+
   useEffect(() => {
     if (isInView) {
       mainControls.start("visible")
@@ -115,9 +123,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-12"
+          className="mt-12 flex justify-center"
         >
-          <InteractiveButton variant="primary" size="lg">
+          <InteractiveButton variant="primary" size="lg" onClick={handleExploreClick}>
             Explore Our World
           </InteractiveButton>
         </motion.div>

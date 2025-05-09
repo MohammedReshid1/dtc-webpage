@@ -20,7 +20,7 @@ export default function MemberSpotlight() {
         "Led team to win national AI competition",
         "Mentored 12 junior members",
       ],
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/images/member-alex.jpg",
       links: {
         github: "#",
         linkedin: "#",
@@ -36,7 +36,7 @@ export default function MemberSpotlight() {
         "Created developer onboarding program",
         "Open source contributor",
       ],
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/images/member-priya.jpg",
       links: {
         github: "#",
         linkedin: "#",
@@ -48,7 +48,7 @@ export default function MemberSpotlight() {
       role: "UX/UI Design Lead",
       bio: "Jordan brings creativity and user-centered thinking to all Dablie projects. Their design work has been recognized for its accessibility and innovation, creating experiences that delight users.",
       achievements: ["Redesigned club brand identity", "Led 3 UX research studies", "Mentored 8 design interns"],
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/images/member-jordan.jpg",
       links: {
         github: "#",
         linkedin: "#",
@@ -102,9 +102,9 @@ export default function MemberSpotlight() {
                   className="rounded-lg overflow-hidden shadow-lg"
                 >
                   <img
-                    src={members[activeIndex].image || "/placeholder.svg"}
+                    src={members[activeIndex].image || "/images/placeholder-member.jpg"}
                     alt={members[activeIndex].name}
-                    className="w-full h-auto"
+                    className="w-full h-auto object-cover aspect-[3/4]"
                   />
                 </motion.div>
 

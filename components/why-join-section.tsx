@@ -59,14 +59,14 @@ export default function WhyJoinSection() {
         "Joining Dablie was the turning point in my tech journey. The skills and connections I gained helped me land my dream job at a top tech company.",
       name: "Sarah Chen",
       role: "Software Engineer",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/testimonial-sarah.jpg",
     },
     {
       quote:
         "The collaborative environment at Dablie Tech Club helped me grow not just as a developer, but as a leader and communicator.",
       name: "Marcus Johnson",
       role: "Product Manager",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/testimonial-marcus.jpg",
     },
   ]
 
@@ -154,7 +154,7 @@ export default function WhyJoinSection() {
                   >
                     <div className="flex-shrink-0">
                       <img
-                        src={testimonial.image || "/placeholder.svg"}
+                        src={testimonial.image || "/images/placeholder-testimonial.jpg"}
                         alt={testimonial.name}
                         className="w-12 h-12 rounded-full object-cover"
                       />

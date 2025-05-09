@@ -36,7 +36,7 @@ export default function AboutSection() {
   ]
 
   return (
-    <section ref={ref} className="min-h-screen py-20 bg-white relative overflow-hidden">
+    <section ref={ref} id="about-us" className="min-h-screen py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
