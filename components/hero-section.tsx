@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion"
-import { Code, Cpu, Zap } from "lucide-react"
+import { Terminal, Code2, Braces } from "lucide-react"
 import { useSoundEffects } from "./sound-effects"
 import InteractiveButton from "./interactive-button"
 
@@ -12,6 +12,7 @@ export default function HeroSection() {
   const mainControls = useAnimation()
   const { playSound } = useSoundEffects()
   const [currentWord, setCurrentWord] = useState(0)
+  const [showCursor, setShowCursor] = useState(true)
 
   const handleExploreClick = () => {
     const aboutSection = document.getElementById("about-us");
@@ -28,131 +29,234 @@ export default function HeroSection() {
     }
   }, [isInView, mainControls, playSound])
 
-  const taglineWords = ["Innovate.", "Create.", "Collaborate."]
+  const taglineWords = [
+    { text: "Build", color: "text-primary" },
+    { text: "Hack", color: "text-secondary" },
+    { text: "Ship", color: "text-accent" }
+  ]
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWord((prev) => (prev === taglineWords.length - 1 ? 0 : prev + 1))
-    }, 3000)
+    }, 2500)
 
     return () => clearInterval(interval)
   }, [taglineWords.length])
 
+  // Cursor blink effect
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev)
+    }, 530)
+    return () => clearInterval(cursorInterval)
+  }, [])
+
   return (
     <section
       ref={ref}
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-black to-gray-900 dark:from-black dark:to-gray-900 text-white"
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
     >
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl animate-blob"></div>
-        <div className="absolute bottom-20 right-20 w-64 h-64 bg-cyan-500 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-40 left-40 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
-      </div>
+      {/* Terminal-style header bar */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="absolute top-0 left-0 right-0 h-8 bg-card border-b border-primary/30 flex items-center px-4 gap-2 z-20"
+      >
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-destructive"></div>
+          <div className="w-3 h-3 rounded-full bg-secondary"></div>
+          <div className="w-3 h-3 rounded-full bg-primary"></div>
+        </div>
+        <span className="text-xs text-muted-foreground ml-4 font-mono">~/dablie-tech-club</span>
+      </motion.div>
 
-      <div className="container mx-auto px-4 z-10 text-center">
+      <div className="container mx-auto px-4 z-10 text-center pt-12">
+        {/* Terminal prompt badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex items-center justify-center gap-3 mb-6"
-          onMouseEnter={() => playSound("hover")}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex items-center justify-center gap-2 mb-8"
         >
-          <span className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">Welcome to</span>
+          <div className="terminal-border bg-card/50 backdrop-blur-sm px-4 py-2 rounded text-sm font-mono flex items-center gap-2 hover-glow">
+            <Terminal className="h-4 w-4 text-primary animate-flicker" />
+            <span className="text-primary terminal-glow">system.init()</span>
+          </div>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400"
-        >
-          Dablie Tech Club
-        </motion.h1>
-
-        <div className="flex justify-center mb-12 h-16 relative">
-          <AnimatePresence mode="wait">
+        {/* Main title with staggered animation */}
+        <div className="mb-4">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-6xl md:text-8xl font-bold mb-2 tracking-tight"
+          >
             <motion.span
-              key={currentWord}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-2xl md:text-3xl font-light absolute"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="inline-block text-primary terminal-glow"
             >
-              {taglineWords[currentWord]}
+              Dablie
             </motion.span>
-          </AnimatePresence>
+            {" "}
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="inline-block text-foreground"
+            >
+              Tech
+            </motion.span>
+            {" "}
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="inline-block text-accent cyan-glow"
+            >
+              Club
+            </motion.span>
+          </motion.h1>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex flex-wrap justify-center gap-6 mt-8"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full cursor-pointer"
-            onMouseEnter={() => playSound("hover")}
-            onClick={() => playSound("click")}
-          >
-            <Code className="h-5 w-5 text-purple-400" />
-            <span>Developers</span>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full cursor-pointer"
-            onMouseEnter={() => playSound("hover")}
-            onClick={() => playSound("click")}
-          >
-            <Cpu className="h-5 w-5 text-cyan-400" />
-            <span>Engineers</span>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full cursor-pointer"
-            onMouseEnter={() => playSound("hover")}
-            onClick={() => playSound("click")}
-          >
-            <Zap className="h-5 w-5 text-pink-400" />
-            <span>Creators</span>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-12 flex justify-center"
-        >
-          <InteractiveButton variant="primary" size="lg" onClick={handleExploreClick}>
-            Explore Our World
-          </InteractiveButton>
-        </motion.div>
-
+        {/* Animated tagline with terminal prompt */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+          transition={{ duration: 0.6, delay: 1.2 }}
+          className="flex justify-center items-center mb-16 h-12 relative"
         >
-          <div className="flex flex-col items-center">
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-              <motion.div
-                animate={{
-                  y: [0, 12, 0],
-                }}
-                transition={{
-                  repeat: Number.POSITIVE_INFINITY,
-                  duration: 1.5,
-                  ease: "easeInOut",
-                }}
-                className="w-1.5 h-1.5 bg-white rounded-full mt-2"
-              />
-            </div>
+          <span className="text-primary font-mono text-xl md:text-2xl mr-2 terminal-glow">{'>'}</span>
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={currentWord}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className={`text-xl md:text-2xl font-bold ${taglineWords[currentWord].color} absolute left-0 whitespace-nowrap`}
+              >
+                {taglineWords[currentWord].text}
+              </motion.span>
+            </AnimatePresence>
           </div>
+          <motion.span
+            animate={{ opacity: showCursor ? 1 : 0 }}
+            className="text-primary font-mono text-xl md:text-2xl ml-20"
+          >
+            ▌
+          </motion.span>
         </motion.div>
+
+        {/* Category badges with icons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4 }}
+          className="flex flex-wrap justify-center gap-4 mt-8 mb-12"
+        >
+          {[
+            { icon: Terminal, label: "[devs]", color: "primary", delay: 0 },
+            { icon: Code2, label: "[engineers]", color: "secondary", delay: 0.1 },
+            { icon: Braces, label: "[creators]", color: "accent", delay: 0.2 }
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 1.6 + item.delay }}
+              whileHover={{ scale: 1.05, y: -3 }}
+              className={`
+                terminal-border bg-card/30 backdrop-blur-sm px-6 py-3 rounded
+                cursor-pointer hover-lift group
+                ${item.color === 'primary' ? 'hover:box-glow-green' : ''}
+                ${item.color === 'secondary' ? 'hover:box-glow-amber' : ''}
+                ${item.color === 'accent' ? 'hover:box-glow-cyan' : ''}
+              `}
+              onMouseEnter={() => playSound("hover")}
+              onClick={() => playSound("click")}
+            >
+              <div className="flex items-center gap-3">
+                <item.icon className={`h-5 w-5 text-${item.color} ${
+                  item.color === 'primary' ? 'group-hover:terminal-glow' : ''
+                  }${item.color === 'secondary' ? 'group-hover:amber-glow' : ''}
+                  ${item.color === 'accent' ? 'group-hover:cyan-glow' : ''}
+                `} />
+                <span className="font-mono text-sm">{item.label}</span>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 2.0 }}
+          className="flex justify-center gap-4 flex-wrap"
+        >
+          <InteractiveButton
+            variant="primary"
+            size="lg"
+            onClick={handleExploreClick}
+            className="font-mono"
+          >
+            <Terminal className="h-4 w-4 mr-2" />
+            ./explore.sh
+          </InteractiveButton>
+        </motion.div>
+
+        {/* Scroll indicator with terminal style */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 2.2 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-xs font-mono text-muted-foreground">[scroll]</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{
+              repeat: Number.POSITIVE_INFINITY,
+              duration: 1.8,
+              ease: "easeInOut",
+            }}
+            className="text-primary text-xl"
+          >
+            ↓
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Decorative code snippets floating in background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
+        {['const', 'function', 'return', 'class', 'import', 'export'].map((word, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{
+              y: '110vh',
+              opacity: [0, 0.5, 0.5, 0]
+            }}
+            transition={{
+              duration: 15 + idx * 2,
+              repeat: Number.POSITIVE_INFINITY,
+              delay: idx * 3,
+              ease: "linear"
+            }}
+            className={`absolute font-mono text-6xl font-bold`}
+            style={{
+              left: `${10 + idx * 15}%`,
+              color: idx % 3 === 0 ? 'hsl(var(--primary))' : idx % 3 === 1 ? 'hsl(var(--secondary))' : 'hsl(var(--accent))'
+            }}
+          >
+            {word}
+          </motion.div>
+        ))}
       </div>
     </section>
   )

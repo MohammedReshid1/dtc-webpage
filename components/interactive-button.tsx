@@ -25,12 +25,12 @@ export default function InteractiveButton({
 }: InteractiveButtonProps) {
   const { playSound } = useSoundEffects()
 
-  const baseStyles = "relative rounded-lg font-medium transition-all flex items-center justify-center"
+  const baseStyles = "relative rounded font-medium transition-all flex items-center justify-center font-mono terminal-border"
 
   const variantStyles = {
-    primary: "bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-700 hover:to-cyan-600",
-    secondary: "bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20",
-    outline: "bg-transparent border-2 border-purple-500 text-purple-500 dark:text-purple-400 hover:bg-purple-500/10",
+    primary: "bg-primary/10 text-primary border-primary hover:bg-primary/20 box-glow-green",
+    secondary: "bg-secondary/10 text-secondary border-secondary hover:bg-secondary/20 box-glow-amber",
+    outline: "bg-transparent border-accent text-accent hover:bg-accent/10 box-glow-cyan",
   }
 
   const sizeStyles = {
@@ -59,19 +59,23 @@ export default function InteractiveButton({
       }`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
-      whileHover={disabled ? {} : { scale: 1.03, y: -2 }}
-      whileTap={disabled ? {} : { scale: 0.97 }}
+      whileHover={disabled ? {} : { scale: 1.02, y: -2 }}
+      whileTap={disabled ? {} : { scale: 0.98 }}
       disabled={disabled}
     >
       {icon && <span className="flex-shrink-0">{icon}</span>}
       <span>{children}</span>
 
-      {/* Glow effect for primary buttons */}
-      {variant === "primary" && !disabled && (
+      {/* Terminal glow effect */}
+      {!disabled && (
         <motion.div
-          className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-lg opacity-0 blur-xl transition-opacity"
+          className={`absolute inset-0 -z-10 rounded blur-lg transition-opacity ${
+            variant === 'primary' ? 'bg-primary/30' :
+            variant === 'secondary' ? 'bg-secondary/30' :
+            'bg-accent/30'
+          }`}
           initial={{ opacity: 0 }}
-          whileHover={{ opacity: 0.5 }}
+          whileHover={{ opacity: 0.6 }}
         />
       )}
     </motion.button>

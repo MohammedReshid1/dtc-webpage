@@ -1,35 +1,34 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Twitter, Linkedin, Mail, MapPin } from "lucide-react"
+import { Github, Twitter, Linkedin, Mail, MapPin, Terminal } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: <Github className="h-5 w-5" />, href: "#", label: "GitHub" },
-    { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
-    { icon: <Mail className="h-5 w-5" />, href: "#", label: "Email" },
+    { icon: <Github className="h-5 w-5" />, href: "#", label: "GitHub", color: "primary" },
+    { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter", color: "accent" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn", color: "secondary" },
+    { icon: <Mail className="h-5 w-5" />, href: "#", label: "Email", color: "primary" },
   ]
 
   const footerLinks = [
-    { title: "About", href: "#" },
-    { title: "Projects", href: "#" },
-    { title: "Events", href: "#" },
-    { title: "Blog", href: "#" },
-    { title: "Contact", href: "#" },
-    { title: "Privacy Policy", href: "#" },
+    { title: "about", href: "#about-us" },
+    { title: "projects", href: "#projects" },
+    { title: "events", href: "#" },
+    { title: "community", href: "#community" },
+    { title: "join", href: "#join" },
   ]
 
   return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-purple-500 to-transparent"></div>
-      </div>
+    <footer className="relative overflow-hidden pt-20 pb-8 border-t border-primary/20">
+      {/* Terminal status bar at top */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -37,20 +36,31 @@ export default function Footer() {
               transition={{ duration: 0.5 }}
               viewport={{ once: false, amount: 0.3 }}
             >
-              <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
-                Dablie Tech Club
-              </h3>
-              <p className="text-gray-400 mb-6">
-                A community of innovators, creators, and tech enthusiasts building the future together.
+              <div className="flex items-center gap-2 mb-4">
+                <Terminal className="h-6 w-6 text-primary animate-flicker" />
+                <h3 className="text-2xl font-bold">
+                  <span className="text-primary terminal-glow">Dablie</span>
+                  <span className="text-foreground"> Tech</span>
+                </h3>
+              </div>
+              <p className="text-muted-foreground text-sm mb-6 font-mono leading-relaxed">
+                {'// '}A community of innovators, creators, and tech enthusiasts building the future together.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex gap-3">
                 {socialLinks.map((link, index) => (
                   <motion.a
                     key={index}
                     href={link.href}
                     aria-label={link.label}
-                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-white transition-colors"
-                    whileHover={{ y: -3 }}
+                    className={`
+                      w-10 h-10 rounded terminal-border flex items-center justify-center
+                      transition-all hover-lift
+                      ${link.color === 'primary' ? 'border-primary/50 text-primary hover:box-glow-green' : ''}
+                      ${link.color === 'secondary' ? 'border-secondary/50 text-secondary hover:box-glow-amber' : ''}
+                      ${link.color === 'accent' ? 'border-accent/50 text-accent hover:box-glow-cyan' : ''}
+                    `}
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {link.icon}
                   </motion.a>
@@ -59,6 +69,7 @@ export default function Footer() {
             </motion.div>
           </div>
 
+          {/* Quick Links */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -66,11 +77,19 @@ export default function Footer() {
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: false, amount: 0.3 }}
             >
-              <h4 className="text-lg font-bold mb-6">Quick Links</h4>
-              <ul className="space-y-3">
+              <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <span className="text-secondary">[</span>
+                quick_links
+                <span className="text-secondary">]</span>
+              </h4>
+              <ul className="space-y-3 font-mono text-sm">
                 {footerLinks.map((link, index) => (
                   <li key={index}>
-                    <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
+                    <a
+                      href={link.href}
+                      className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
+                    >
+                      <span className="text-primary opacity-0 group-hover:opacity-100 transition-opacity">{'>'}</span>
                       {link.title}
                     </a>
                   </li>
@@ -79,6 +98,7 @@ export default function Footer() {
             </motion.div>
           </div>
 
+          {/* Contact */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -86,19 +106,23 @@ export default function Footer() {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: false, amount: 0.3 }}
             >
-              <h4 className="text-lg font-bold mb-6">Contact Us</h4>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-purple-400 mt-0.5" />
-                  <span className="text-gray-400">hello@dablietech.com</span>
+              <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <span className="text-accent">[</span>
+                contact
+                <span className="text-accent">]</span>
+              </h4>
+              <ul className="space-y-4 font-mono text-sm">
+                <li className="flex items-start gap-3 group">
+                  <Mail className="h-4 w-4 text-accent mt-0.5 group-hover:cyan-glow transition-all" />
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+                    hello@dablietech.com
+                  </span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-purple-400 mt-0.5" />
-                  <span className="text-gray-400">
-                    Tech Innovation Center
-                    <br />
-                    123 Digital Avenue
-                    <br />
+                <li className="flex items-start gap-3 group">
+                  <MapPin className="h-4 w-4 text-accent mt-0.5 group-hover:cyan-glow transition-all" />
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors text-xs leading-relaxed">
+                    Tech Innovation Center<br />
+                    123 Digital Avenue<br />
                     San Francisco, CA 94107
                   </span>
                 </li>
@@ -106,6 +130,7 @@ export default function Footer() {
             </motion.div>
           </div>
 
+          {/* Newsletter */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -113,33 +138,56 @@ export default function Footer() {
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: false, amount: 0.3 }}
             >
-              <h4 className="text-lg font-bold mb-6">Newsletter</h4>
-              <p className="text-gray-400 mb-4">
-                Subscribe to our newsletter to get the latest updates on events and projects.
+              <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <span className="text-secondary">[</span>
+                newsletter
+                <span className="text-secondary">]</span>
+              </h4>
+              <p className="text-muted-foreground text-sm mb-4 font-mono">
+                {'// '}Get updates on events and projects
               </p>
               <form className="space-y-3">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-white"
-                />
+                <div className="terminal-border rounded bg-card/30">
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 bg-transparent outline-none text-sm font-mono text-foreground placeholder:text-muted-foreground"
+                  />
+                </div>
                 <motion.button
                   type="submit"
-                  className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
-                  whileHover={{ scale: 1.02 }}
+                  className="w-full px-4 py-3 bg-primary/10 text-primary rounded font-mono text-sm terminal-border border-primary hover:bg-primary/20 transition-all box-glow-green"
+                  whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Subscribe
+                  ./subscribe.sh
                 </motion.button>
               </form>
             </motion.div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8 mt-8 text-center">
-          <p className="text-gray-500 text-sm">© {currentYear} Dablie Tech Club. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div className="border-t border-primary/20 pt-8 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-muted-foreground text-sm font-mono">
+              <span className="text-primary">©</span> {currentYear} Dablie Tech Club
+              <span className="text-muted-foreground/50"> | </span>
+              <span className="text-accent">v2.5.0</span>
+            </p>
+            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span>system.status: <span className="text-primary">online</span></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Decorative corner brackets */}
+      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-primary/20 pointer-events-none"></div>
+      <div className="absolute top-20 left-4 w-16 h-16 border-l-2 border-t-2 border-accent/20 pointer-events-none"></div>
     </footer>
   )
 }
