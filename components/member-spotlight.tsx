@@ -2,8 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
-import InteractiveButton from "./interactive-button"
+import { ChevronLeft, ChevronRight, User } from "lucide-react"
 import { useSoundEffects } from "./sound-effects"
 
 export default function MemberSpotlight() {
@@ -12,48 +11,37 @@ export default function MemberSpotlight() {
 
   const members = [
     {
-      name: "Alex Rivera",
-      role: "AI Research Lead",
-      bio: "Alex leads our AI research team, focusing on developing ethical AI solutions for healthcare and education. With a background in machine learning and cognitive science, they bring a unique perspective to technical challenges.",
+      name: "alex_rivera",
+      role: "ai_research_lead",
+      bio: "Leads AI research team focusing on ethical AI solutions for healthcare and education. Background in machine learning and cognitive science.",
       achievements: [
-        "Published 3 research papers",
-        "Led team to win national AI competition",
-        "Mentored 12 junior members",
+        "published_3_papers",
+        "won_national_ai_comp",
+        "mentored_12_members",
       ],
-      image: "/images/member-alex.jpg",
-      links: {
-        github: "#",
-        linkedin: "#",
-        portfolio: "#",
-      },
+      color: "primary"
     },
     {
-      name: "Priya Sharma",
-      role: "Full-Stack Developer",
-      bio: "Priya specializes in building scalable web applications and mentoring new developers. Her work on the Community Learning Hub has helped hundreds of students access quality educational resources.",
+      name: "priya_sharma",
+      role: "fullstack_developer",
+      bio: "Specializes in scalable web applications. Work on Community Learning Hub helped hundreds of students access quality educational resources.",
       achievements: [
-        "Developed 5 major club projects",
-        "Created developer onboarding program",
-        "Open source contributor",
+        "developed_5_projects",
+        "created_onboarding_program",
+        "active_oss_contributor",
       ],
-      image: "/images/member-priya.jpg",
-      links: {
-        github: "#",
-        linkedin: "#",
-        portfolio: "#",
-      },
+      color: "secondary"
     },
     {
-      name: "Jordan Chen",
-      role: "UX/UI Design Lead",
-      bio: "Jordan brings creativity and user-centered thinking to all Dablie projects. Their design work has been recognized for its accessibility and innovation, creating experiences that delight users.",
-      achievements: ["Redesigned club brand identity", "Led 3 UX research studies", "Mentored 8 design interns"],
-      image: "/images/member-jordan.jpg",
-      links: {
-        github: "#",
-        linkedin: "#",
-        portfolio: "#",
-      },
+      name: "jordan_chen",
+      role: "ux_ui_design_lead",
+      bio: "Brings creativity and user-centered thinking to all Dablie projects. Design work recognized for accessibility and innovation.",
+      achievements: [
+        "redesigned_brand_identity",
+        "led_3_ux_research_studies",
+        "mentored_8_design_interns"
+      ],
+      color: "accent"
     },
   ]
 
@@ -68,156 +56,147 @@ export default function MemberSpotlight() {
   }
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: false, amount: 0.3 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">Member Spotlight</h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Meet the talented individuals who make Dablie Tech Club an innovative and vibrant community.
+          <div className="inline-block mb-4">
+            <span className="font-mono text-sm text-muted-foreground"># SECTION_06</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            <span className="terminal-prompt"></span>members --spotlight
+          </h2>
+          <div className="flex justify-center mb-6">
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+          </div>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
+            {'// '}Meet our outstanding community members
           </p>
         </motion.div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, x: 100 }}
+              initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
+              exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5 }}
-              className="grid md:grid-cols-2 gap-8 items-center bg-white dark:bg-gray-800 rounded-xl p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+              className={`
+                terminal-border bg-card/50 backdrop-blur-sm rounded p-8 md:p-12
+                ${members[activeIndex].color === 'primary' ? 'hover:box-glow-green' : ''}
+                ${members[activeIndex].color === 'secondary' ? 'hover:box-glow-amber' : ''}
+                ${members[activeIndex].color === 'accent' ? 'hover:box-glow-cyan' : ''}
+              `}
             >
-              <div className="relative">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="rounded-lg overflow-hidden shadow-lg"
-                >
-                  <img
-                    src={members[activeIndex].image || "/images/placeholder-member.jpg"}
-                    alt={members[activeIndex].name}
-                    className="w-full h-auto object-cover aspect-[3/4]"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="absolute -bottom-5 -right-5 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-lg p-4 text-white shadow-lg"
-                >
-                  <p className="font-bold">{members[activeIndex].role}</p>
-                </motion.div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className={`p-4 rounded-full terminal-border ${
+                  members[activeIndex].color === 'primary' ? 'bg-primary/10 text-primary border-primary/50' :
+                  members[activeIndex].color === 'secondary' ? 'bg-secondary/10 text-secondary border-secondary/50' :
+                  'bg-accent/10 text-accent border-accent/50'
+                }`}>
+                  <User className="h-8 w-8" />
+                </div>
+                <div>
+                  <h3 className={`text-3xl font-bold font-mono ${
+                    members[activeIndex].color === 'primary' ? 'text-primary terminal-glow' :
+                    members[activeIndex].color === 'secondary' ? 'text-secondary amber-glow' :
+                    'text-accent cyan-glow'
+                  }`}>
+                    {members[activeIndex].name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-mono mt-1">
+                    {members[activeIndex].role}
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="text-3xl font-bold mb-4 text-gray-900 dark:text-white"
-                >
-                  {members[activeIndex].name}
-                </motion.h3>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                {members[activeIndex].bio}
+              </p>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="text-gray-600 dark:text-gray-300 mb-6"
-                >
-                  {members[activeIndex].bio}
-                </motion.p>
+              <div className="space-y-3 mb-8">
+                <div className={`text-sm font-mono font-bold mb-3 ${
+                  members[activeIndex].color === 'primary' ? 'text-primary' :
+                  members[activeIndex].color === 'secondary' ? 'text-secondary' :
+                  'text-accent'
+                }`}>
+                  $ cat achievements.txt
+                </div>
+                {members[activeIndex].achievements.map((achievement, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-center gap-3 text-sm font-mono"
+                  >
+                    <span className={`${
+                      members[activeIndex].color === 'primary' ? 'text-primary' :
+                      members[activeIndex].color === 'secondary' ? 'text-secondary' :
+                      'text-accent'
+                    }`}>
+                      [✓]
+                    </span>
+                    <span className="text-muted-foreground">{achievement}</span>
+                  </motion.div>
+                ))}
+              </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="mb-6"
+              {/* Navigation */}
+              <div className="flex items-center justify-between pt-6 border-t border-border">
+                <motion.button
+                  onClick={handlePrev}
+                  className={`p-3 rounded terminal-border transition-all ${
+                    members[activeIndex].color === 'primary' ? 'hover:box-glow-green text-primary border-primary/50' :
+                    members[activeIndex].color === 'secondary' ? 'hover:box-glow-amber text-secondary border-secondary/50' :
+                    'hover:box-glow-cyan text-accent border-accent/50'
+                  }`}
+                  whileHover={{ scale: 1.05, x: -3 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-3">Key Achievements</h4>
-                  <ul className="space-y-2">
-                    {members[activeIndex].achievements.map((achievement, index) => (
-                      <motion.li
-                        key={index}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                        className="flex items-center gap-2 text-gray-600 dark:text-gray-300"
-                      >
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500"></div>
-                        <span>{achievement}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
+                  <ChevronLeft className="h-5 w-5" />
+                </motion.button>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.7 }}
-                  className="flex gap-3"
+                <div className="flex gap-2">
+                  {members.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        playSound("click")
+                        setActiveIndex(idx)
+                      }}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        idx === activeIndex
+                          ? members[idx].color === 'primary' ? 'bg-primary w-8' :
+                            members[idx].color === 'secondary' ? 'bg-secondary w-8' :
+                            'bg-accent w-8'
+                          : 'bg-muted'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <motion.button
+                  onClick={handleNext}
+                  className={`p-3 rounded terminal-border transition-all ${
+                    members[activeIndex].color === 'primary' ? 'hover:box-glow-green text-primary border-primary/50' :
+                    members[activeIndex].color === 'secondary' ? 'hover:box-glow-amber text-secondary border-secondary/50' :
+                    'hover:box-glow-cyan text-accent border-accent/50'
+                  }`}
+                  whileHover={{ scale: 1.05, x: 3 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <InteractiveButton variant="outline" size="sm" icon={<ExternalLink className="h-4 w-4" />}>
-                    Connect
-                  </InteractiveButton>
-                  <InteractiveButton variant="primary" size="sm">
-                    View Projects
-                  </InteractiveButton>
-                </motion.div>
+                  <ChevronRight className="h-5 w-5" />
+                </motion.button>
               </div>
             </motion.div>
           </AnimatePresence>
-
-          <div className="flex justify-center mt-8 gap-4">
-            <motion.button
-              onClick={handlePrev}
-              className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onMouseEnter={() => playSound("hover")}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </motion.button>
-
-            <div className="flex gap-2 items-center">
-              {members.map((_, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => {
-                    playSound("click")
-                    setActiveIndex(index)
-                  }}
-                  className={`w-3 h-3 rounded-full ${
-                    activeIndex === index
-                      ? "bg-gradient-to-r from-purple-500 to-cyan-500"
-                      : "bg-gray-300 dark:bg-gray-600"
-                  }`}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  onMouseEnter={() => playSound("hover")}
-                />
-              ))}
-            </div>
-
-            <motion.button
-              onClick={handleNext}
-              className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onMouseEnter={() => playSound("hover")}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </motion.button>
-          </div>
         </div>
       </div>
     </section>

@@ -8,7 +8,6 @@ import Footer from "@/components/footer"
 import SmoothScroll from "@/components/smooth-scroll"
 import ThemeToggle from "@/components/theme-toggle"
 import SoundToggle from "@/components/sound-toggle"
-import ThreeBackground from "@/components/three-background"
 import { SoundProvider } from "@/components/sound-effects"
 import ImpactSection from "@/components/impact-section"
 import WhyJoinSection from "@/components/why-join-section"
@@ -23,7 +22,6 @@ export default function Home() {
   return (
     <SoundProvider>
       <SmoothScroll>
-        <ThreeBackground />
         <ThemeToggle />
         <SoundToggle />
         <HeroSection />
