@@ -95,7 +95,7 @@ export default function ImpactSection() {
                 stat.color === 'secondary' ? 'text-secondary' :
                 'text-accent'
               }`}>
-                <Counter target={stat.value} suffix="+" />
+                <Counter end={stat.value} suffix="+" />
               </div>
               <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
                 {stat.label}
